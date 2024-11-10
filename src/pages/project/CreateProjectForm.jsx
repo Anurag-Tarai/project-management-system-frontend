@@ -6,8 +6,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { tags } from '../project-list/ProjectList'
+import { Cross1Icon } from '@radix-ui/react-icons'
 
 const CreateProjectForm = () => {
+
+    const handleTagsChange = (newValue)=>{
+        const currentTags = form.getValues("tags")
+        const updatedTags = currentTags.includes(newValue)?
+        currentTags.filter(tag=>tag!==newValue):[...currentTags, newValue]
+        form.setValue("tags", updatedTags)
+    }
     const form = useForm({
         defaultValues:{
             name:"",
@@ -17,9 +25,7 @@ const CreateProjectForm = () => {
         }
     })
     const onSubmit = (data)=>{
-        console.log(data);
-        
-        
+        console.log(data)        
     }
   return (
     <div>
@@ -83,12 +89,11 @@ const CreateProjectForm = () => {
 
                 {/* this is tag field */}
                <FormField control={form.control}
-               name="tag"
+               name="tags"
                render={({field})=><FormItem>
                 <FormControl>
                     <Select
-                    value={field.value}
-                    onValueChange={(value)=>field.onChange(value)}
+                    onValueChange={(value)=>handleTagsChange(value)}
                     // className="border w-full border-gray-700 py-5 px-5"
                     >
                         <SelectTrigger className="w-full">
@@ -99,6 +104,14 @@ const CreateProjectForm = () => {
                         </SelectContent>   
                     </Select>
                 </FormControl>
+                <div className='flex gap-1 flex-wrap'>
+                    {
+                        field.value.map((item)=><div key={item} onClick={()=>handleTagsChange(item)} className='cursor-pointer flex rounded-full items-center border gap-2 px-3 py-2'>
+                        <span className='text-sm'>{item}</span>
+                        <Cross1Icon className='h-3 w-3'/>
+                    </div>)
+                    }
+                </div>
                 <FormMessage/>
                </FormItem>}
                />
