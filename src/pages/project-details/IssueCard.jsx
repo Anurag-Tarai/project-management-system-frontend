@@ -5,13 +5,15 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { DotsVerticalIcon, PersonIcon } from '@radix-ui/react-icons'
 import React from 'react'
 import UserList from './UserList'
+import { useNavigate } from 'react-router-dom'
 
 const IssueCard = () => {
+    const navigate = useNavigate()
   return (
     <Card className="rounded-md py-1 pb-2">
         <CardHeader className="py-0 pb-1">
             <div className='flex justify-between items-center'>
-                <CardTitle>
+                <CardTitle className="cursor-pointer" onClick={()=>navigate("/project/3/issue/8")}>
                     Create Nav bar
                 </CardTitle>
                 <DropdownMenu>

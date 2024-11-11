@@ -1,0 +1,24 @@
+.loginContainer {
+    height: 100vh; /* Take up the full height of the viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center the box vertically and horizontally */
+    /* Optional background color */
+  }
+  
+  .minContainer {
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #161313;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 10px 10px 10px  rgba(128, 2, 2, 0.1);
+  }
+  
+  .loginBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
