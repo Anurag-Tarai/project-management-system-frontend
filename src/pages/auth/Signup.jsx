@@ -2,18 +2,22 @@ import { Button } from '@/components/ui/button'
 import { DialogClose } from '@/components/ui/dialog'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { register } from '@/redux/auth/Action'
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 
 const Signup = () => {
+    const dispatch = useDispatch()
     const form = useForm({
         defaultValues:{
             email:"",
             password:"",
-            fullName:""
+            username:""
         }
     })
     const onSubmit = (data)=>{
+        dispatch(register(data))
         console.log(data)        
     }
   return (
@@ -22,9 +26,9 @@ const Signup = () => {
         <Form{...form}>
             <form className='space-y-3' onSubmit={form.handleSubmit(onSubmit)}>
 
-                 {/* this is fullName field */}
+                 {/* this is username field */}
                <FormField control={form.control}
-               name="fullName"
+               name="username"
                render={({field})=>(<FormItem>
                 <FormControl>
                     <Input {...field}

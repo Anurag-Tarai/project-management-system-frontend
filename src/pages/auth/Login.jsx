@@ -2,11 +2,18 @@ import { Button } from '@/components/ui/button'
 import { DialogClose } from '@/components/ui/dialog'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { login } from '@/redux/auth/Action'
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
+
+    const dispatch = useDispatch()
+
+
     const form = useForm({
+
         defaultValues:{
             email:"",
             password:"",
@@ -14,7 +21,8 @@ const Login = () => {
         }
     })
     const onSubmit = (data)=>{
-        console.log(data)        
+        dispatch(login(data))
+        console.log("user login data", data)        
     }
   return (
     <div className='space-y-5'>
@@ -51,8 +59,8 @@ const Login = () => {
                 <FormMessage/>
                </FormItem>)}
                />
-         
-               <Button type="submit" className="w-full mt-5">Register</Button>
+            
+               <Button type="submit" className="w-full mt-5">Login</Button>
               
             </form>
         </Form>
