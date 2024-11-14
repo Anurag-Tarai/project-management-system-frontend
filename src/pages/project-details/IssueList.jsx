@@ -4,8 +4,29 @@ import IssueCard from "./IssueCard"
 import { Button } from "@/components/ui/button"
 import { PlusIcon } from "@radix-ui/react-icons"
 import CreateIssueForm from "./CreateIssueForm"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { fetchIssues } from "@/redux/issue/Action"
+import { useParams } from "react-router-dom"
+import { store } from "@/redux/Store"
 
 const IssueList = ({title, status}) => {
+    const dispatch = useDispatch()
+    const {id} = useParams()
+    const {issue} = useSelector(store=>store)
+
+    // console.log("issues from backend", issue);
+    
+    
+    useEffect(()=>{
+        dispatch(fetchIssues(id))
+    },[id])
+
+
+    useEffect(() => {
+        // console.log("IssueList rendered with issues:", issue.issues);
+    }, [issue.issues]);  // Ensure issues are part of the dependency array
+    
   return (
     <div>
         <Dialog>
@@ -15,7 +36,7 @@ const IssueList = ({title, status}) => {
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-2">
-                        {[1,1,1,1].map((item)=><IssueCard  key={item} />)}
+                        {issue.issues?.filter((issue=>issue.status==status)).map((item)=><IssueCard projectId={id} item={item} key={item.id} />)}
                     </div>
                 </CardContent>
                 <CardFooter>
@@ -24,14 +45,14 @@ const IssueList = ({title, status}) => {
                         variant="outline" 
                         className="w-full flex items-center gap-2">
                             <PlusIcon/>
-                            Create Issue
+                            Add Tasks
                             </Button>
                     </DialogTrigger>
                 </CardFooter>
             </Card>
             <DialogContent>
-                <DialogHeader>Create New Issue</DialogHeader>
-                <CreateIssueForm/>
+                <DialogHeader>Add Tasks</DialogHeader>
+                <CreateIssueForm status={status} />
             </DialogContent>
         </Dialog>
     </div>

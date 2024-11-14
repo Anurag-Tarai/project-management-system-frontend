@@ -25,7 +25,7 @@ const CreateProjectForm = () => {
             name:"",
             description:"",
             category:"",
-            tags:["javascript","react"]
+            tags:[]
         }
     })
     const onSubmit = (data)=>{

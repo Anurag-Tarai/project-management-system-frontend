@@ -4,36 +4,53 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { PlusIcon } from '@radix-ui/react-icons'
-import React from 'react'
+import React, { useEffect } from 'react'
 import InviteUserForm from './InviteUserForm'
 import IssueList from './IssueList'
 import ChatBox from './ChatBox'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProjectById } from '@/redux/project/Action'
+import { useParams } from 'react-router-dom'
+import { store } from '@/redux/Store'
 
 const ProjectDetails = () => {
+    const {project} = useSelector(store=>store)
+
+    const dispatch = useDispatch();
+    const {id} = useParams();
+    
+
     const handleProjectInvitaion = ()=>{
 
     }
+
+    useEffect(()=>{
+        dispatch(fetchProjectById(id))
+    }, [id])
+
+    // console.log("projectDetails", project.projectDetails);
+    
+
   return (
     <div className='mt-5 lg:px-10'>
         <div className='lg:flex gap-5 justify-between pb-4'>
             <ScrollArea>
-                <div className='text-gray-400 pb-10 w-full'>
-                    <h1 className='text-lg font-semibold pb-5'>Create Ecommerce Website</h1>
+                <div className='text-gray-300 pb-10 w-full'>
+                    <h1 className='text-2xl font-semibold pb-5'>{project.projectDetails?.name}</h1>
                     <div className='space-y-5 pb-10 text-sm'>
                     <p className='w-full md:max-w-lg lg:max-w-xl '>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    {project.projectDetails?.description}
                     </p>
                     <div className='flex'>
-                        <p className='w-36'>Project Lead :</p>
-                        <p>Anurag Tarai</p>
-
-                    </div>
+                        <p className='w-36'>Project Lead : </p>
+                        <Badge>{project.projectDetails?.owner.username}</Badge>
+                    </div>  
                     <div className='flex'>
                         <p className='w-36'>Member :</p>
                         <div className='flex items-center gap-2'>
                             {
-                                [1,1,1].map((item)=><Avatar>
-                                    <AvatarFallback>A</AvatarFallback>
+                                project.projectDetails?.team.map((item)=><Avatar>
+                                    <AvatarFallback>{item.username[0]}</AvatarFallback>
                                 </Avatar>)
                             }
                         </div>
@@ -56,10 +73,7 @@ const ProjectDetails = () => {
                         <p className='w-36'>Category :</p>
                         <p>Fullstack</p>
                     </div>
-                    <div className='flex'>
-                        <p className='w-36'>Project Lead : </p>
-                        <Badge>Anurag</Badge>
-                    </div>            
+                           
                 </div>
                 <section>
                     <p className='py-5 border-b text-lg tracking-wider'>Tasks</p>

@@ -13,10 +13,11 @@ import * as actionType from "./ActionType"
       case actionType.FETCH_CHAT_MESSAGE_REQUESTS:
       case actionType.SEND_MESSAGE_REQUESTS:
       case actionType.FETCH_MESSAGE_REQUESTS:
+      case actionType.FETCH_CHAT_BY_PROJECT_REQUESTS:
         return { ...state, loading: true, error: null };
 
       case actionType.FETCH_MESSAGE_SUCCESS:
-        case actionType.FETCH_CHAT_MESSAGE_SUCCESS:
+      case actionType.FETCH_CHAT_MESSAGE_SUCCESS:
         return {
           ...state,
           loading: false,
@@ -27,7 +28,7 @@ import * as actionType from "./ActionType"
         return {
           ...state,
           loading:false,
-          messages: [...state.messages, action.messages]
+          messages: [...state.messages, action.message]
         };
       case actionType.FETCH_CHAT_BY_PROJECT_SUCCESS:
         return {

@@ -3,17 +3,27 @@ import { Button } from '@/components/ui/button'
 import { DialogClose } from '@/components/ui/dialog'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { createComment } from '@/redux/comment/Action'
+import { SewingPinFilledIcon } from '@radix-ui/react-icons'
+import { SendHorizonalIcon, SendIcon } from 'lucide-react'
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 
 const CreateCommentForm = ({issueId}) => {
+    const dispatch = useDispatch()
     const form = useForm({
         defaultValues:{
             content:""
         }
     })
     const onSubmit = (data)=>{
-        console.log(data)        
+        dispatch(createComment({content: data.content, issueId}))
+        console.log(data)
+        
+        form.reset({
+            content: "" // Reset the content field to empty
+          })
     }
   return (
     <div>
@@ -44,7 +54,9 @@ const CreateCommentForm = ({issueId}) => {
                </FormItem>)}
                />
 
-               <Button type="submit">save</Button>
+               <Button type="submit">
+                <SendHorizonalIcon/>
+               </Button>
               
             </form>
         </Form>

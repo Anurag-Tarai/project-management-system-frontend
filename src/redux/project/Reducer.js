@@ -34,8 +34,8 @@ export const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        projects: action.projects,
         error: null,
-        projects: action.payload,
       };
 
     case SEARCH_PROJECTS_SUCCESS:
@@ -43,7 +43,7 @@ export const projectReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
-        searchProjects: action.payload,
+        searchProjects: action.projects
       };
 
     case CREATE_PROJECTS_SUCCESS:
@@ -51,7 +51,7 @@ export const projectReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
-        projects:[...state.projects, action.project],
+        projects:[...state.projects, action.projects],
       };
       case FETCH_PROJECTS_BY_ID_SUCCESS:
       return {
@@ -65,7 +65,7 @@ export const projectReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
-        projects: state.projects.filter(project=>project.id===action.projectId),
+        projects: state.projects.filter(project=>project.id !==action.projectId),
       };
 
     default:

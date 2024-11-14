@@ -16,7 +16,7 @@ export const commentReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        comments: [...state.comments, action.comment],
+        comments: [...state.comments, action.comments],
       };
 
     case actionType.DELETE_COMMENT_SUCCESS:

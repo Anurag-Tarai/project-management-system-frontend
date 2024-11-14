@@ -2,21 +2,30 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { deleteProject, fetchProjectById } from '@/redux/project/Action'
 import { DotFilledIcon, DotsVerticalIcon } from '@radix-ui/react-icons'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-const ProjectCard = () => {
+const ProjectCard = ({item}) => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const handleDelete = ()=>{
+            dispatch(deleteProject({projectId:item.id}))
+    }
+
   return (
     <Card className="p-5 w-full lg:max-w-3xl">
         <div className='space-y-5'>
             <div className='space-y-5'>
                 <div className='flex justify-between'>
                     <div className='flex items-center gap-5'>
-                        <h1 onClick={()=>navigate("/project/3")} className='cursor-pointer font-bold text-lg'>
-                            Create Ecommerce Project
+                        <h1 onClick={()=>navigate("/project/"+item.id)} className='cursor-pointer font-bold text-lg'>
+                           {item.name}
                         </h1>
                         <DotFilledIcon/>
-                        <p className='text-sm text-gray-400'>fullstack</p>
+                        <p className='text-sm text-gray-400'>{item.category}</p>
                     </div>
                     <div>
                         <DropdownMenu>
@@ -29,7 +38,7 @@ const ProjectCard = () => {
                                 <DropdownMenuItem>
                                     Update
                                 </DropdownMenuItem>
-                                <DropdownMenuItem>
+                                <DropdownMenuItem onClick={handleDelete} >
                                     Delete
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
@@ -38,11 +47,11 @@ const ProjectCard = () => {
 
                 </div>
             <p className='text-gray-500 text-sm'>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                {item.description}
             </p>
             </div>
             <div className='flext flex-wrap gap-2 items-center'>
-                {[1,1,1,1].map((item)=><Badge key={item} variant="outline">spring boot</Badge>)}
+                {item.tags.map((e)=><Badge key={e} variant="outline">{e}</Badge>)}
             </div>
         </div>
     </Card>

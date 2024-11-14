@@ -2,9 +2,14 @@ import { Button } from '@/components/ui/button'
 import { DialogClose } from '@/components/ui/dialog'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { createIssue } from '@/redux/issue/Action'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
-const CreateIssueForm = () => {
+const CreateIssueForm = ({status}) => {
+  const {id} = useParams();
+  const dispatch = useDispatch()
   const form = useForm({
     defaultValues:{
         issueName:"",
@@ -12,7 +17,16 @@ const CreateIssueForm = () => {
     }
 })
 const onSubmit = (data)=>{
-    console.log(data)        
+
+    data.projectId = id;
+    dispatch(
+      createIssue({
+      title:data.issueName,
+      description:data.description,
+      projectId: id,
+      status
+    }))
+    console.log("issue created" , data)        
 }
   return (
     <div>
@@ -49,7 +63,7 @@ const onSubmit = (data)=>{
                />
 
                <DialogClose>
-               <Button type="submit" className="w-full mt-5">Create Issue</Button>
+               <Button type="submit" className="w-full mt-5">add task</Button>
                </DialogClose>
             </form>
         </Form>

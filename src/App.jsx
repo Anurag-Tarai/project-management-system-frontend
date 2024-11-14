@@ -9,6 +9,8 @@ import Auth from './pages/auth/Auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { store } from './redux/Store'
 import { getUser } from './redux/auth/Action'
+import { fetchProjects } from './redux/project/Action'
+import AcceptInvitation from './pages/project/AcceptInvitation'
 
 function App() {
       const dispatch = useDispatch();
@@ -16,9 +18,10 @@ function App() {
 
       useEffect(()=>{
         dispatch(getUser())
+        dispatch(fetchProjects({}))
       },[auth.jwt])
 
-      console.log("from app.jsx auth", auth);
+      // console.log("from app.jsx auth", auth);
       
 
   return (
@@ -31,6 +34,7 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/project/:id' element={<ProjectDetails/>}/>
         <Route path='/project/:projectId/issue/:issueId' element={<IssueDetails/>}/>
+        <Route path='/accept-invitation' element={<AcceptInvitation/>}/>
       </Routes>
       </div>:<Auth/>
     }
