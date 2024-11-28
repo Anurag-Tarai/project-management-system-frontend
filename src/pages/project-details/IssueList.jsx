@@ -40,7 +40,9 @@ const IssueList = ({title, status}) => {
                     </div>
                 </CardContent>
                 <CardFooter>
-                    <DialogTrigger>
+                    {
+                        status=="pending" &&
+                        <DialogTrigger>
                         <Button 
                         variant="outline" 
                         className="w-full flex items-center gap-2">
@@ -48,6 +50,7 @@ const IssueList = ({title, status}) => {
                             Add Tasks
                             </Button>
                     </DialogTrigger>
+                    }
                 </CardFooter>
             </Card>
             <DialogContent>
